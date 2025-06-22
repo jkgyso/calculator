@@ -50,20 +50,24 @@ function deleteChar() {
     } else if (firstNumber) {
         decimalUsedInFirst = firstNumber.endsWith('.') ? false : decimalUsedInFirst;
         firstNumber = firstNumber.slice(0, -1);
+    } else {
+        firstNumber = '0';
     }
     updateDisplay();
 }
 
 // Input Value Display -> 5 + 3 
 function updateDisplay() {
-    inputValue.textContent = firstNumber + operation + secondNumber || "0";
+    inputValue.textContent = firstNumber || operation || secondNumber ? firstNumber + operation + secondNumber : "0";
 }
 
 // Check if the button is a value or operator 
 function enterValues(event) {
     const inputText = event.target.textContent;
 
-    if (event.target.classList.contains('value')) {
+    if(event.target.classList.contains('backspace')) {
+        deleteChar();
+    }else if (event.target.classList.contains('value')) {
         if (justCalculated) resetCalculator(inputText);
         else processNumberInput(inputText);
     } else if (event.target.classList.contains('operator')) {
